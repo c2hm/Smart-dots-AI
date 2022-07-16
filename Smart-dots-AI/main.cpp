@@ -19,8 +19,8 @@ int main(int argc, char* argv[]) {
     SDL_CreateWindowAndRenderer(WIDTH, HEIGTH, 0, &window, &r);
 
     field.AddObstacle(150, 150, 50, 50);
-    field.AddObstacle(400, 600, 50, 50);
-    field.AddObstacle(300, 700, 50, 50);
+    field.AddObstacle(400, 500, 50, 50);
+    field.AddObstacle(300, 600, 50, 50);
 
     while (!(event.type == SDL_QUIT)) {
 

@@ -6,7 +6,7 @@ using namespace std;
 
 static const int MAX_VELOCITY = 6;
 static const int SIZE = 350;
-static const int RADIUS = 3;
+static const int RADIUS = 4;
 
 Dot::Dot(Field* pF, int x, int y)
 {
