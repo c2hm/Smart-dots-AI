@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
         pop.Update(r);
         SDL_RenderPresent(r);  
 
-        SDL_Delay(10);
+        SDL_Delay(50);
         SDL_PollEvent(&event);
     }
 

@@ -3,8 +3,7 @@
 #include "Brain.h"
 #include "Field.h"
 
-static const int SIZE = 1000;
-static const int RADIUS = 3;
+
 
 using namespace std;
 
@@ -19,8 +18,12 @@ private:
     Field* pField;
     int iStep = 0;
     Brain *pBrain;
-    float fPosX;
-    float fPosY;
+    float fPosX = 0;
+    float fPosY = 0;
+    float fVelX = 0;
+    float fVelY = 0;
+    float fAccX = 0;
+    float fAccY = 0;
     bool bDead = false;
     bool bGoal = false;
 

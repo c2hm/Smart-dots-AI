@@ -4,6 +4,10 @@
 
 using namespace std;
 
+static const int MAX_VELOCITY = 6;
+static const int SIZE = 350;
+static const int RADIUS = 3;
+
 Dot::Dot(Field* pF, int x, int y)
 {
     fPosX = x;
@@ -30,16 +34,31 @@ void Dot::Update(SDL_Renderer* renderer)
 
 void Dot::Move()
 {
-    fPosX += pBrain->GetDirectionX(iStep);
-    fPosY += pBrain->GetDirectionY(iStep);
-    iStep++;    
+    fAccX += pBrain->GetDirectionX(iStep);
+    fAccY += pBrain->GetDirectionY(iStep);
+    iStep++;  
+
+    fVelX += fAccX;
+    fVelY += fAccY;
+
+    float fVelNorme = sqrt(fVelX*fVelX + fVelY*fVelY);
+
+    if (fVelNorme >= MAX_VELOCITY)
+    {
+        fVelX = fVelX / fVelNorme * MAX_VELOCITY;
+        fVelY = fVelY / fVelNorme * MAX_VELOCITY;
+    }
+
+
+
+    fPosX += fVelX;
+    fPosY += fVelY;
 
     if (iStep >= SIZE || pField->GetCollision((int)fPosX, (int)fPosY, &bGoal))
     {
         bDead = true;
     }
 }
-
 
 void Dot::Draw(SDL_Renderer* renderer)
 {
@@ -57,6 +76,7 @@ void Dot::Draw(SDL_Renderer* renderer)
         }
     }
 }
+
 
 
 

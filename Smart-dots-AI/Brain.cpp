@@ -6,8 +6,6 @@
 
 using namespace std;
 
-const float multiplier = 3;
-
 Brain::Brain(int s) : size(s)
 {
 	dirX = new float[size];
@@ -19,8 +17,8 @@ Brain::Brain(int s) : size(s)
 	for (int i = 0; i < size; i++)
 	{
 		float angle = ((float)rand() / (float)RAND_MAX) * 2*3.1416;
-		dirX[i] = cos(angle) * multiplier;
-		dirY[i] = sin(angle) * multiplier;
+		dirX[i] = cos(angle);
+		dirY[i] = sin(angle);
 	}
 }
 
