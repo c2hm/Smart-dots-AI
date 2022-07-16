@@ -2,16 +2,16 @@
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include "Population.h"
+#include "Field.h"
 
 using namespace std;
 
 SDL_Event event;
 SDL_Renderer* r = NULL;
 SDL_Window* window = NULL; 
-Population pop(10, 200, 200);
+Population pop(100, 100, 100);
 
-#define HEIGTH 800
-#define WIDTH 800
+
 
 int main(int argc, char* argv[]) {
 

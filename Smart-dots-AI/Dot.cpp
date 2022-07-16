@@ -3,10 +3,12 @@
 #include <cmath>
 using namespace std;
 
-Dot::Dot(int x, int y)
+Dot::Dot(int x, int y, int wh, int ww)
 {
-    posX = x;
-    posY = y;
+    fPosX = x;
+    fPosY = y;
+    iWindowHeigth = wh;
+    iWindowWidth = ww;
 
     pBrain = new Brain(1000);
 }
@@ -18,17 +20,53 @@ Dot::~Dot()
 
 void Dot::Update(SDL_Renderer* renderer)
 {
-    Move();
+    if (!bDead)
+    {
+        Move();
+        VerifyDead();
+    }
+
     Draw(renderer);
+
+    if (bKill)
+    {
+        bDead = true;
+    }
 }
 
 void Dot::Move()
 {
-    if (step < size)
+       fPosX += pBrain->GetDirectionX(iStep);
+       fPosY += pBrain->GetDirectionY(iStep);
+       iStep++;     
+}
+
+void Dot::VerifyDead()
+{
+    if (fPosX < 0)
     {
-       posX += pBrain->GetDirectionX(step);
-       posY += pBrain->GetDirectionY(step);
-       step++;
+        fPosX = 2;
+        bKill = true;
+    }
+    else if (fPosX > iWindowHeigth)
+    {
+        fPosX = iWindowHeigth - 2;
+        bKill = true;
+    }
+    if (fPosY < 0)
+    {
+        fPosY = 2;
+        bKill = true;
+    }
+    else if (fPosY > iWindowWidth)
+    {
+        fPosY = iWindowWidth - 2;
+        bKill = true;
+    }
+
+    if (iStep >= SIZE)
+    {
+        bDead = true;
     }
 }
 
@@ -37,15 +75,13 @@ void Dot::Draw(SDL_Renderer* renderer)
     SDL_SetRenderDrawColor(renderer, 150, 0, 0, 255);
 
     // Drawing circle
-    for (float x = posX - radius; x <= posX + radius; x++)
+    for (float x = fPosX - RADIUS; x <= fPosX + RADIUS; x++)
     {
-        for (float y = posY - radius; y <= posY + radius; y++)
+        for (float y = fPosY - RADIUS; y <= fPosY + RADIUS; y++)
         {
-            if ((pow(posY - y, 2) + pow(posX - x, 2)) <= pow(radius, 2))
+            if ((pow(fPosY - y, 2) + pow(fPosX - x, 2)) <= pow(RADIUS, 2))
             {
-                x = (int)x;
-                y = (int)y;
-                SDL_RenderDrawPoint(renderer, x, y);
+                SDL_RenderDrawPoint(renderer, (int)x, (int)y);
             }
         }
     }

@@ -9,7 +9,7 @@ Population::Population(int s, int start_x, int start_y)
 	ppDot = new Dot * [size];
 	for (int i = 0; i < size; i++)
 	{
-		ppDot[i] = new Dot(start_x, start_y);
+		ppDot[i] = new Dot(start_x, start_y, 800, 800);
 	}
 }
 
