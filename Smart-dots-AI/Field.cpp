@@ -1,14 +1,18 @@
 #include "Field.h"
 #include <SDL2/SDL.h>
 
+const int DEAD_MARGIN_DIST = 2;
+const int GOAL_LENGTH = 50;
+
 Field::Field(int iGoalposX, int iGoalposY)
 {
-	ppObstacles = nullptr;
+    ppObstacles = nullptr;
 
-	pGoal = new Goal;
-	pGoal->iPosX = iGoalposX;
-	pGoal->iPosY = iGoalposY;
-    pGoal->iRadius = 10;
+    pGoal = new SDL_Rect;
+    pGoal->x = iGoalposX;
+    pGoal->y = iGoalposY;
+    pGoal->h = GOAL_LENGTH;
+    pGoal->w = GOAL_LENGTH;
 
     ppObstacles = new SDL_Rect * [MAX_OBSTACLES];
 }
@@ -37,9 +41,45 @@ void Field::AddObstacle(int iObsPosX, int iObsPosY, int iObsHeigth, int iObsWidt
     }
 }
 
-bool Field::GetCollision()
+bool Field::GetCollision(int iDotPosX, int iDotPosY, bool* bIsGoal)
 {
-	return true;
+    if (iDotPosX < DEAD_MARGIN_DIST || iDotPosX > WIDTH - DEAD_MARGIN_DIST)
+    {
+        return true;
+    }
+    else if (iDotPosY < DEAD_MARGIN_DIST || iDotPosY > HEIGTH - DEAD_MARGIN_DIST)
+    {
+        return true;
+    }
+
+    for (int i = 0; i < iObsSize; i++)
+    {
+        int iLeftLimit = ppObstacles[i]->x - DEAD_MARGIN_DIST;
+        int iRightLimit = ppObstacles[i]->x + ppObstacles[i]->w + DEAD_MARGIN_DIST;
+        int iTopLimit = ppObstacles[i]->y - DEAD_MARGIN_DIST;
+        int iBottomLimit = ppObstacles[i]->y + ppObstacles[i]->h + DEAD_MARGIN_DIST;
+
+        if (iDotPosX > iLeftLimit && iDotPosX < iRightLimit && iDotPosY > iTopLimit && iDotPosY < iBottomLimit)
+        {
+            return true;
+        }
+    }
+
+    int iLeftLimit = pGoal->x - DEAD_MARGIN_DIST;
+    int iRightLimit = pGoal->x + pGoal->w + DEAD_MARGIN_DIST;
+    int iTopLimit = pGoal->y - DEAD_MARGIN_DIST;
+    int iBottomLimit = pGoal->y + pGoal->h + DEAD_MARGIN_DIST;
+
+    if (iDotPosX > iLeftLimit && iDotPosX < iRightLimit && iDotPosY > iTopLimit && iDotPosY < iBottomLimit)
+    {
+        *bIsGoal = true;
+        return true;
+    }
+
+
+
+
+	return false;
 }
 
 void Field::Update(SDL_Renderer* renderer)
@@ -60,17 +100,6 @@ void Field::DrawObstacles(SDL_Renderer* renderer)
 void Field::DrawGoal(SDL_Renderer* renderer)
 {
     SDL_SetRenderDrawColor(renderer, 0, 150, 0, 255);
-
-    // Drawing circle
-    for (float x = pGoal->iPosX - pGoal->iRadius; x <= pGoal->iPosX + pGoal->iRadius; x++)
-    {
-        for (float y = pGoal->iPosY - pGoal->iRadius; y <= pGoal->iPosY + pGoal->iRadius; y++)
-        {
-            if ((pow(pGoal->iPosY - y, 2) + pow(pGoal->iPosX - x, 2)) <= pow(pGoal->iRadius, 2))
-            {
-                SDL_RenderDrawPoint(renderer, x, y);
-            }
-        }
-    }
-
+    SDL_RenderDrawRect(renderer, pGoal);
+    SDL_RenderFillRect(renderer, pGoal);
 }

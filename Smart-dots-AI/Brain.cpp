@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const float multiplier = 2;
+const float multiplier = 3;
 
 Brain::Brain(int s) : size(s)
 {

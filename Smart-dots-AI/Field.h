@@ -11,7 +11,7 @@ public:
 	Field(int iGoalposX, int iGoalposY);
 	~Field();
 	void AddObstacle(int iObsPosX, int iObsPosY, int iObsHeigth, int iObsWidth);
-	bool GetCollision();
+	bool GetCollision(int iDotPosX, int iDotPosY, bool *bIsGoal);
 	void Update(SDL_Renderer* renderer);
 
 private:
@@ -23,7 +23,7 @@ private:
 	}Goal;
 
 	SDL_Rect** ppObstacles;
-	Goal* pGoal;
+	SDL_Rect* pGoal;
 	int iObsSize = 0;
 
 	void DrawObstacles(SDL_Renderer* renderer);

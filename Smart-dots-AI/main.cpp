@@ -10,7 +10,7 @@ SDL_Event event;
 SDL_Renderer* r = NULL;
 SDL_Window* window = NULL; 
 Field field(300, 300);
-Population pop(100, 100, 100);
+Population pop(&field, 100, 100, 100);
 
 int main(int argc, char* argv[]) {
 
@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(WIDTH, HEIGTH, 0, &window, &r);
 
-    field.AddObstacle(600, 600, 50, 50);
+    field.AddObstacle(150, 150, 50, 50);
     field.AddObstacle(400, 600, 50, 50);
     field.AddObstacle(300, 700, 50, 50);
 

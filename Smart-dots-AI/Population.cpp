@@ -1,21 +1,23 @@
 #include "Population.h"
 #include <iostream>
 
+
 using namespace std;
 
-Population::Population(int s, int start_x, int start_y)
+Population::Population(Field *pF, int s, int start_x, int start_y)
 {
-	size = s;
-	ppDot = new Dot * [size];
-	for (int i = 0; i < size; i++)
+	pField = pF;
+	iSize = s;
+	ppDot = new Dot * [iSize];
+	for (int i = 0; i < iSize; i++)
 	{
-		ppDot[i] = new Dot(start_x, start_y, 800, 800);
+		ppDot[i] = new Dot(pF, start_x, start_y);
 	}
 }
 
 Population::~Population()
 {
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < iSize; i++)
 	{
 		delete ppDot[i];
 	}
@@ -24,7 +26,7 @@ Population::~Population()
 
 void Population::Update(SDL_Renderer* renderer)
 {
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < iSize; i++)
 	{
 		ppDot[i]->Update(renderer);
 	}

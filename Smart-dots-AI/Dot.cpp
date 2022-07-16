@@ -1,15 +1,15 @@
 #include "Dot.h"
 #include <SDL2/SDL.h>
 #include <cmath>
+
 using namespace std;
 
-Dot::Dot(int x, int y, int wh, int ww)
+Dot::Dot(Field* pF, int x, int y)
 {
     fPosX = x;
     fPosY = y;
-    iWindowHeigth = wh;
-    iWindowWidth = ww;
 
+    pField = pF;
     pBrain = new Brain(1000);
 }
 
@@ -23,52 +23,23 @@ void Dot::Update(SDL_Renderer* renderer)
     if (!bDead)
     {
         Move();
-        VerifyDead();
     }
 
     Draw(renderer);
-
-    if (bKill)
-    {
-        bDead = true;
-    }
 }
 
 void Dot::Move()
 {
-       fPosX += pBrain->GetDirectionX(iStep);
-       fPosY += pBrain->GetDirectionY(iStep);
-       iStep++;     
-}
+    fPosX += pBrain->GetDirectionX(iStep);
+    fPosY += pBrain->GetDirectionY(iStep);
+    iStep++;    
 
-void Dot::VerifyDead()
-{
-    if (fPosX < 0)
-    {
-        fPosX = 2;
-        bKill = true;
-    }
-    else if (fPosX > iWindowHeigth)
-    {
-        fPosX = iWindowHeigth - 2;
-        bKill = true;
-    }
-    if (fPosY < 0)
-    {
-        fPosY = 2;
-        bKill = true;
-    }
-    else if (fPosY > iWindowWidth)
-    {
-        fPosY = iWindowWidth - 2;
-        bKill = true;
-    }
-
-    if (iStep >= SIZE)
+    if (iStep >= SIZE || pField->GetCollision((int)fPosX, (int)fPosY, &bGoal))
     {
         bDead = true;
     }
 }
+
 
 void Dot::Draw(SDL_Renderer* renderer)
 {
