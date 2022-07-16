@@ -3,7 +3,7 @@
 #include "Brain.h"
 
 static const int SIZE = 1000;
-static const int RADIUS = 5;
+static const int RADIUS = 3;
 
 using namespace std;
 
