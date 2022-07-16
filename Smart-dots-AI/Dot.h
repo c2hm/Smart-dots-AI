@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include "Brain.h"
 
-static const int size = 10;
+static const int size = 1000;
 static const int radius = 5;
 
 using namespace std;

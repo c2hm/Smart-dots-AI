@@ -15,6 +15,7 @@ Population pop(10, 200, 200);
 
 int main(int argc, char* argv[]) {
 
+
     SDL_Init(SDL_INIT_VIDEO);       // Initializing SDL as Video
     SDL_CreateWindowAndRenderer(WIDTH, HEIGTH, 0, &window, &r);
     SDL_SetRenderDrawColor(r, 0, 0, 0, 0);      // setting draw color
@@ -32,7 +33,7 @@ int main(int argc, char* argv[]) {
         pop.Update(r);
         SDL_RenderPresent(r);    // Reflects the changes done in the window.
 
-        SDL_Delay(100);
+        SDL_Delay(10);
         SDL_PollEvent(&event);
     }
 
