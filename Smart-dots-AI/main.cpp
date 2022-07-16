@@ -9,8 +9,8 @@ using namespace std;
 SDL_Event event;
 SDL_Renderer* r = NULL;
 SDL_Window* window = NULL; 
-Field field(300, 300);
-Population pop(&field, 100, 100, 100);
+Field field(400, 100);
+Population pop(&field, 100, 375, 700);
 
 int main(int argc, char* argv[]) {
 

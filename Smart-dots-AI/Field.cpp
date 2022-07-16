@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 
 const int DEAD_MARGIN_DIST = 2;
-const int GOAL_LENGTH = 50;
+const int GOAL_LENGTH = 25;
 
 Field::Field(int iGoalposX, int iGoalposY)
 {
