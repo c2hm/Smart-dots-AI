@@ -1,9 +1,10 @@
-#include <iostream>
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include "Population.h"
 #include "Field.h"
 #include <time.h> 
+#include <string>
 
 using namespace std;
 
@@ -25,9 +26,19 @@ int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(WIDTH, HEIGTH, 0, &window, &r);
 
-    field.AddObstacle(150, 150, 50, 200);
-    field.AddObstacle(400, 500, 200, 50);
-    field.AddObstacle(300, 600, 50, 300);
+
+    TTF_Init();
+    TTF_Font* pFont = TTF_OpenFont("H:/Code perso/Smart-dots-AI/ressources/font.ttf", 24);
+    SDL_Color White = { 255, 255, 255 };
+    SDL_Rect Message_rect;
+    Message_rect.x = 25;
+    Message_rect.y = 25; 
+    Message_rect.w = 100;
+    Message_rect.h = 25; 
+
+    field.AddObstacle(200, 150, 200, 400);
+    field.AddObstacle(400, 450, 200, 50);
+    field.AddObstacle(300, 550, 50, 300);
 
     frameTimer = SDL_GetTicks();
 
@@ -37,8 +48,18 @@ int main(int argc, char* argv[]) {
         {
             SDL_SetRenderDrawColor(r, 0, 0, 0, 0);
             SDL_RenderClear(r);
+
             field.Update(r);
             pop.Update(r);
+
+            string text = "Gen : ";
+            text += to_string(pop.GetGeneration());
+            SDL_Surface*  surfaceMessage = TTF_RenderText_Solid(pFont, text.c_str(), White);
+            SDL_Texture* Message = SDL_CreateTextureFromSurface(r, surfaceMessage);
+            SDL_RenderCopy(r, Message, NULL, &Message_rect);
+            SDL_FreeSurface(surfaceMessage);
+            SDL_DestroyTexture(Message);
+
             state = STATE_UPDATED;
         }
         else if (state == STATE_UPDATED)
@@ -58,6 +79,7 @@ int main(int argc, char* argv[]) {
 
         SDL_PollEvent(&event);
     }
+
 
     SDL_DestroyRenderer(r);
     SDL_DestroyWindow(window);

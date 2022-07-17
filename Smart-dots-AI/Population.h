@@ -10,12 +10,14 @@ public:
 	Population(Field* pF, int s, int start_x, int start_y);
 	~Population();
 	void Update(SDL_Renderer* renderer);
+	int GetGeneration();
 
 private:
 	Field* pField;
 	int iSize;
 	Dot **ppDots;
 	float fFitnessSum = 0;
+	int iGen = 0;
 
 	bool AllDotsDead();
 	void CalculateFitnessSum();

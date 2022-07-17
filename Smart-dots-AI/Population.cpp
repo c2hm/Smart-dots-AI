@@ -74,7 +74,7 @@ void Population::NaturalSelection()
 	delete[] ppDots;
 
 	ppDots = ppNewDots;
-	
+	iGen++;	
 }
 
 Dot* Population::GetParent()
@@ -115,6 +115,11 @@ Dot* Population::GetBestDot()
 		}
 	}
 	return ppDots[iBestDotIndex];
+}
+
+int Population::GetGeneration()
+{
+	return iGen;
 }
 
 
