@@ -13,6 +13,7 @@ public:
 	void AddObstacle(int iObsPosX, int iObsPosY, int iObsHeigth, int iObsWidth);
 	bool GetCollision(int iDotPosX, int iDotPosY, bool *bIsGoal);
 	void Update(SDL_Renderer* renderer);
+	float GetGoalDistance(int iDotPosX, int iDotPosY);
 
 private:
 	typedef struct

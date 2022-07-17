@@ -4,17 +4,30 @@
 
 using namespace std;
 
-static const int MAX_VELOCITY = 6;
+static const int MAX_VELOCITY = 20;
 static const int SIZE = 350;
 static const int RADIUS = 4;
 
 Dot::Dot(Field* pF, int x, int y)
 {
-    fPosX = x;
-    fPosY = y;
+    iStartPosX = x;
+    iStartPosY = y;
+    fPosX = iStartPosX;
+    fPosY = iStartPosY;
 
     pField = pF;
     pBrain = new Brain(1000);
+}
+
+Dot::Dot(Field* pF, int x, int y, Brain *pB)
+{
+    iStartPosX = x;
+    iStartPosY = y;
+    fPosX = iStartPosX;
+    fPosY = iStartPosY;
+
+    pField = pF;
+    pBrain = pB;
 }
 
 Dot::~Dot() 
@@ -57,6 +70,7 @@ void Dot::Move()
     if (iStep >= SIZE || pField->GetCollision((int)fPosX, (int)fPosY, &bGoal))
     {
         bDead = true;
+        CalculateFitness();
     }
 }
 
@@ -75,6 +89,34 @@ void Dot::Draw(SDL_Renderer* renderer)
             }
         }
     }
+}
+
+void Dot::CalculateFitness()
+{
+    if (bGoal)
+    {
+        fFitness = 1000.0f/(float)(iStep*iStep);
+    }
+    else
+    {
+        float fGoalDist = pField->GetGoalDistance((int)fPosX, (int)fPosY);
+        fFitness = 1.0f / (fGoalDist*fGoalDist);
+    } 
+}
+
+float Dot::GetFitness()
+{
+    return fFitness;
+}
+
+bool Dot::IsDead()
+{
+    return bDead;
+}
+
+Dot* Dot::CloneDot()
+{
+    return new Dot(pField, iStartPosX, iStartPosY, pBrain->CloneBrain());
 }
 
 

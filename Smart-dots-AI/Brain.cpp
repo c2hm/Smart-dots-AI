@@ -6,35 +6,54 @@
 
 using namespace std;
 
-Brain::Brain(int s) : size(s)
+Brain::Brain(int s) : iSize(s)
 {
-	dirX = new float[size];
-	dirY = new float[size];
+	fDirX = new float[iSize];
+	fDirY = new float[iSize];
 
 	random_device rd;
 	srand(rd());
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < iSize; i++)
 	{
 		float angle = ((float)rand() / (float)RAND_MAX) * 2*3.1416;
-		dirX[i] = cos(angle);
-		dirY[i] = sin(angle);
+		fDirX[i] = cos(angle);
+		fDirY[i] = sin(angle);
+	}
+}
+
+Brain::Brain(int s, float *x, float *y) : iSize(s)
+{
+	fDirX = new float[iSize];
+	fDirY = new float[iSize];
+
+	for (int i = 0; i < iSize; i++)
+	{
+		fDirX[i] = x[i];
+		fDirY[i] = y[i];
 	}
 }
 
 Brain::~Brain()
 {
-	delete[] dirX;
-	delete[] dirY;
+	delete[] fDirX;
+	delete[] fDirY;
 }
 
 float Brain::GetDirectionX(int index)
 {
-	return dirX[index];
+	return fDirX[index];
 }
 
 float Brain::GetDirectionY(int index)
 {
-	return dirY[index];
+	return fDirY[index];
 }
+
+Brain* Brain::CloneBrain()
+{
+	return new Brain(iSize, fDirX, fDirY);
+}
+
+
 

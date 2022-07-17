@@ -14,5 +14,11 @@ public:
 private:
 	Field* pField;
 	int iSize;
-	Dot **ppDot;
+	Dot **ppDots;
+	float fFitnessSum = 0;
+
+	bool AllDotsDead();
+	void CalculateFitnessSum();
+	void NaturalSelection();
+	Dot* GetParent();
 };

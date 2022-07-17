@@ -1,5 +1,5 @@
 #include "Population.h"
-#include <iostream>
+#include <random>
 
 
 using namespace std;
@@ -8,10 +8,10 @@ Population::Population(Field *pF, int s, int start_x, int start_y)
 {
 	pField = pF;
 	iSize = s;
-	ppDot = new Dot * [iSize];
+	ppDots = new Dot * [iSize];
 	for (int i = 0; i < iSize; i++)
 	{
-		ppDot[i] = new Dot(pF, start_x, start_y);
+		ppDots[i] = new Dot(pF, start_x, start_y);
 	}
 }
 
@@ -19,16 +19,86 @@ Population::~Population()
 {
 	for (int i = 0; i < iSize; i++)
 	{
-		delete ppDot[i];
+		delete ppDots[i];
 	}
-	delete[] ppDot;
+	delete[] ppDots;
 }
 
 void Population::Update(SDL_Renderer* renderer)
 {
+	if (AllDotsDead())
+	{
+		NaturalSelection();
+	}
+
 	for (int i = 0; i < iSize; i++)
 	{
-		ppDot[i]->Update(renderer);
+		ppDots[i]->Update(renderer);
 	}
 }
+
+bool Population::AllDotsDead()
+{
+	for (int i = 0; i < iSize; i++)
+	{
+		if (!ppDots[i]->IsDead())
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void Population::NaturalSelection()
+{
+	Dot** ppNewDots = new Dot * [iSize];
+
+	for (int i = 0; i < iSize; i++)
+	{
+		Dot* pDotParent = GetParent();
+		ppNewDots[i] = pDotParent->CloneDot();
+		//ppNewDots[i]->Mutate();
+	}
+
+	for (int i = 0; i < iSize; i++)
+	{
+		delete ppDots[i];
+	}
+	delete[] ppDots;
+
+	ppDots = ppNewDots;
+	
+}
+
+Dot* Population::GetParent()
+{
+	CalculateFitnessSum();
+
+	random_device rd;
+	srand(rd());
+
+	float fRandomNbr = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / fFitnessSum));
+	float runningSum = 0;
+
+	for (int i = 0; i < iSize; i++) {
+		runningSum += ppDots[i]->GetFitness();
+		if (runningSum > fRandomNbr) {
+			return ppDots[i];
+		}
+	}
+
+	return nullptr;
+}
+
+
+void Population::CalculateFitnessSum() {
+	fFitnessSum = 0;
+	for (int i = 0; i < iSize; i++) {
+		fFitnessSum += ppDots[i]->GetFitness();
+	}
+}
+
+
+
+
 

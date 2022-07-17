@@ -4,13 +4,15 @@ class Brain
 {
 public:
 	Brain(int s);
+	Brain(int s, float* x, float* y);
 	~Brain();
 	float GetDirectionX(int index);
 	float GetDirectionY(int index);
+	Brain* CloneBrain();
 
 private:
-	int size;
-	float* dirX;
-	float* dirY;
+	int iSize;
+	float* fDirX;
+	float* fDirY;
 };
 

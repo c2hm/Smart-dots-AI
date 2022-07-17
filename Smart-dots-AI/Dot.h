@@ -3,16 +3,19 @@
 #include "Brain.h"
 #include "Field.h"
 
-
-
 using namespace std;
 
 class Dot
 {
 public:
     Dot(Field *pF, int x, int y);
+    Dot(Field* pF, int x, int y, Brain* pB);
     ~Dot();
     void Update(SDL_Renderer* renderer);
+    float GetFitness();
+    Dot* CloneDot();
+    bool IsDead();
+    
 
 private:
     Field* pField;
@@ -26,9 +29,13 @@ private:
     float fAccY = 0;
     bool bDead = false;
     bool bGoal = false;
+    float fFitness = 0;
+    int iStartPosX = 0;
+    int iStartPosY = 0;
 
     void Move();
     void Draw(SDL_Renderer* renderer);
+    void CalculateFitness();
 };
 
 
