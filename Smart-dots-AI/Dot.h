@@ -15,6 +15,7 @@ public:
     float GetFitness();
     Dot* CloneDot();
     bool IsDead();
+    void Mutate();
     
 
 private:
@@ -32,6 +33,7 @@ private:
     float fFitness = 0;
     int iStartPosX = 0;
     int iStartPosY = 0;
+    int fClosestDistToGoal = INT_MAX;
 
     void Move();
     void Draw(SDL_Renderer* renderer);

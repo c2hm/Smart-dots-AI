@@ -67,6 +67,8 @@ void Dot::Move()
     fPosX += fVelX;
     fPosY += fVelY;
 
+    fClosestDistToGoal = pField->GetGoalDistance((int)fPosX, (int)fPosY);
+
     if (iStep >= SIZE || pField->GetCollision((int)fPosX, (int)fPosY, &bGoal))
     {
         bDead = true;
@@ -99,8 +101,7 @@ void Dot::CalculateFitness()
     }
     else
     {
-        float fGoalDist = pField->GetGoalDistance((int)fPosX, (int)fPosY);
-        fFitness = 1.0f / (fGoalDist*fGoalDist);
+        fFitness = 1.0f / (fClosestDistToGoal * fClosestDistToGoal);
     } 
 }
 
@@ -114,8 +115,17 @@ bool Dot::IsDead()
     return bDead;
 }
 
+void Dot::Mutate()
+{
+    pBrain->Mutate();
+}
+
 Dot* Dot::CloneDot()
 {
+    if (pBrain == NULL)
+    {
+        return NULL;
+    }
     return new Dot(pField, iStartPosX, iStartPosY, pBrain->CloneBrain());
 }
 

@@ -57,7 +57,7 @@ void Population::NaturalSelection()
 	{
 		Dot* pDotParent = GetParent();
 		ppNewDots[i] = pDotParent->CloneDot();
-		//ppNewDots[i]->Mutate();
+		ppNewDots[i]->Mutate();
 	}
 
 	for (int i = 0; i < iSize; i++)
@@ -87,7 +87,7 @@ Dot* Population::GetParent()
 		}
 	}
 
-	return nullptr;
+	return ppDots[iSize];
 }
 
 

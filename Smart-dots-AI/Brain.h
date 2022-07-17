@@ -9,6 +9,7 @@ public:
 	float GetDirectionX(int index);
 	float GetDirectionY(int index);
 	Brain* CloneBrain();
+	void Mutate();
 
 private:
 	int iSize;

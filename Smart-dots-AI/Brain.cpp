@@ -6,6 +6,8 @@
 
 using namespace std;
 
+const int MUTATION_PERCENTAGE_LIMIT = 1;
+
 Brain::Brain(int s) : iSize(s)
 {
 	fDirX = new float[iSize];
@@ -52,7 +54,31 @@ float Brain::GetDirectionY(int index)
 
 Brain* Brain::CloneBrain()
 {
-	return new Brain(iSize, fDirX, fDirY);
+	Brain* clone = new Brain(iSize, fDirX, fDirY);
+
+	if (clone == NULL)
+	{
+		return NULL;
+	}
+	return clone;
+}
+
+void Brain::Mutate()
+{
+	random_device rd;
+	srand(rd());
+
+	for (int i = 0; i < iSize; i++)
+	{
+		float iMutationChance = rand() % 100;
+
+		if (iMutationChance <= MUTATION_PERCENTAGE_LIMIT && iMutationChance > 0)
+		{
+			float iMutationPercentage = 0.1;
+			fDirX[i] += fDirX[i] * iMutationPercentage;
+			fDirY[i] += fDirY[i] * iMutationPercentage;
+		}
+	}
 }
 
 
