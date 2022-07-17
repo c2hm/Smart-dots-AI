@@ -67,7 +67,12 @@ void Dot::Move()
     fPosX += fVelX;
     fPosY += fVelY;
 
-    fClosestDistToGoal = pField->GetGoalDistance((int)fPosX, (int)fPosY);
+    float fDist = pField->GetGoalDistance((int)fPosX, (int)fPosY);
+
+    if (fClosestDistToGoal > fDist)
+    {
+        fClosestDistToGoal = fDist;
+    }
 
     if (iStep >= SIZE || pField->GetCollision((int)fPosX, (int)fPosY, &bGoal))
     {
