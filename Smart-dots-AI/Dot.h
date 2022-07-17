@@ -16,6 +16,7 @@ public:
     Dot* CloneDot();
     bool IsDead();
     void Mutate();
+    void SetBest();
     
 
 private:
@@ -34,6 +35,7 @@ private:
     int iStartPosX = 0;
     int iStartPosY = 0;
     int fClosestDistToGoal = INT_MAX;
+    bool bIsBest = false;
 
     void Move();
     void Draw(SDL_Renderer* renderer);

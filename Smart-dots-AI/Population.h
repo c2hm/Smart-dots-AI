@@ -21,4 +21,5 @@ private:
 	void CalculateFitnessSum();
 	void NaturalSelection();
 	Dot* GetParent();
+	Dot* GetBestDot();
 };

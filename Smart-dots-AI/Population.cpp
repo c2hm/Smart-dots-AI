@@ -31,10 +31,12 @@ void Population::Update(SDL_Renderer* renderer)
 		NaturalSelection();
 	}
 
-	for (int i = 0; i < iSize; i++)
+	for (int i = 1; i < iSize; i++)
 	{
 		ppDots[i]->Update(renderer);
 	}
+
+	ppDots[0]->Update(renderer);
 }
 
 bool Population::AllDotsDead()
@@ -53,7 +55,12 @@ void Population::NaturalSelection()
 {
 	Dot** ppNewDots = new Dot * [iSize];
 
-	for (int i = 0; i < iSize; i++)
+	Dot* pBestDot = GetBestDot();
+
+	ppNewDots[0] = pBestDot->CloneDot();
+	ppNewDots[0]->SetBest();
+
+	for (int i = 1; i < iSize; i++)
 	{
 		Dot* pDotParent = GetParent();
 		ppNewDots[i] = pDotParent->CloneDot();
@@ -96,6 +103,18 @@ void Population::CalculateFitnessSum() {
 	for (int i = 0; i < iSize; i++) {
 		fFitnessSum += ppDots[i]->GetFitness();
 	}
+}
+
+Dot* Population::GetBestDot()
+{
+	int iBestDotIndex = 0;
+	for (int i = 0; i < iSize; i++) {
+		if (ppDots[i]->GetFitness() > ppDots[iBestDotIndex]->GetFitness())
+		{
+			iBestDotIndex = i;
+		}
+	}
+	return ppDots[iBestDotIndex];
 }
 
 

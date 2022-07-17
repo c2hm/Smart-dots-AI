@@ -78,9 +78,16 @@ void Dot::Move()
 
 void Dot::Draw(SDL_Renderer* renderer)
 {
-    SDL_SetRenderDrawColor(renderer, 150, 0, 0, 255);
+    if (bIsBest)
+    {
+        SDL_SetRenderDrawColor(renderer, 0, 150, 0, 255);
+    }
+    else
+    {
+        SDL_SetRenderDrawColor(renderer, 150, 0, 0, 255);
+    }
+    
 
-    // Drawing circle
     for (float x = fPosX - RADIUS; x <= fPosX + RADIUS; x++)
     {
         for (float y = fPosY - RADIUS; y <= fPosY + RADIUS; y++)
@@ -127,6 +134,11 @@ Dot* Dot::CloneDot()
         return NULL;
     }
     return new Dot(pField, iStartPosX, iStartPosY, pBrain->CloneBrain());
+}
+
+void Dot::SetBest()
+{
+    bIsBest = true;
 }
 
 

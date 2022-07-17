@@ -101,7 +101,7 @@ void Field::DrawObstacles(SDL_Renderer* renderer)
 
 void Field::DrawGoal(SDL_Renderer* renderer)
 {
-    SDL_SetRenderDrawColor(renderer, 0, 150, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 150, 150, 255);
     SDL_RenderDrawRect(renderer, pGoal);
     SDL_RenderFillRect(renderer, pGoal);
 }
