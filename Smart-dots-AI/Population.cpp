@@ -87,7 +87,7 @@ Dot* Population::GetParent()
 		}
 	}
 
-	return ppDots[iSize];
+	return ppDots[iSize-1];
 }
 
 
