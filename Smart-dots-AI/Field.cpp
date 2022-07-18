@@ -81,7 +81,10 @@ bool Field::GetCollision(int iDotPosX, int iDotPosY, bool* bIsGoal)
 
 float Field::GetGoalDistance(int iDotPosX, int iDotPosY)
 {
-    return sqrt((pGoal->x - iDotPosX) * (pGoal->x - iDotPosX) + (pGoal->y - iDotPosY) * (pGoal->y - iDotPosY));
+    float fNbr1 = ((pGoal->x + GOAL_LENGTH / 2) - iDotPosX) * ((pGoal->x + GOAL_LENGTH / 2) - iDotPosX);
+    float fNbr2 = ((pGoal->y + GOAL_LENGTH / 2) - iDotPosY) * ((pGoal->y + GOAL_LENGTH / 2) - iDotPosY);
+
+    return sqrt(fNbr1 + fNbr2);
 }
 
 void Field::Update(SDL_Renderer* renderer)

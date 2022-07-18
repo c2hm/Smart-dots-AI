@@ -4,7 +4,7 @@
 
 using namespace std;
 
-static const int MAX_VELOCITY = 20;
+static const int MAX_VELOCITY = 15;
 static const int SIZE = 350;
 static const int RADIUS = 4;
 
@@ -109,7 +109,7 @@ void Dot::CalculateFitness()
 {
     if (bGoal)
     {
-        fFitness = 1000.0f/(float)(iStep*iStep);
+        fFitness = 100.0f/(float)(iStep*iStep);
     }
     else
     {

@@ -36,7 +36,9 @@ int main(int argc, char* argv[]) {
     Message_rect.w = 100;
     Message_rect.h = 25; 
 
-    field.AddObstacle(200, 150, 200, 400);
+    //field.AddObstacle(200, 150, 200, 400);
+    field.AddObstacle(300, 100, 200, 50);
+    field.AddObstacle(500, 100, 200, 50);
     field.AddObstacle(400, 450, 200, 50);
     field.AddObstacle(300, 550, 50, 300);
 
