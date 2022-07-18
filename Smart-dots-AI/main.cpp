@@ -30,11 +30,20 @@ int main(int argc, char* argv[]) {
     TTF_Init();
     TTF_Font* pFont = TTF_OpenFont("H:/Code perso/Smart-dots-AI/ressources/font.ttf", 24);
     SDL_Color White = { 255, 255, 255 };
-    SDL_Rect Message_rect;
-    Message_rect.x = 25;
-    Message_rect.y = 25; 
-    Message_rect.w = 100;
-    Message_rect.h = 25; 
+    SDL_Rect rectMessageGen;
+    rectMessageGen.x = 25;
+    rectMessageGen.y = 25; 
+    rectMessageGen.w = 100;
+    rectMessageGen.h = 25; 
+    SDL_Rect rectMessageSteps;
+    rectMessageSteps.x = 25;
+    rectMessageSteps.y = 60;
+    rectMessageSteps.w = 100;
+    rectMessageSteps.h = 25;
+
+    string text;
+    SDL_Surface* surfaceMessage;
+    SDL_Texture* Message;
 
     //field.AddObstacle(200, 150, 200, 400);
     field.AddObstacle(300, 100, 200, 50);
@@ -54,13 +63,22 @@ int main(int argc, char* argv[]) {
             field.Update(r);
             pop.Update(r);
 
-            string text = "Gen : ";
+            text = "Gen : ";
             text += to_string(pop.GetGeneration());
-            SDL_Surface*  surfaceMessage = TTF_RenderText_Solid(pFont, text.c_str(), White);
-            SDL_Texture* Message = SDL_CreateTextureFromSurface(r, surfaceMessage);
-            SDL_RenderCopy(r, Message, NULL, &Message_rect);
+            surfaceMessage = TTF_RenderText_Solid(pFont, text.c_str(), White);
+            Message = SDL_CreateTextureFromSurface(r, surfaceMessage);
+            SDL_RenderCopy(r, Message, NULL, &rectMessageGen);
             SDL_FreeSurface(surfaceMessage);
             SDL_DestroyTexture(Message);
+
+            text = "Steps : ";
+            text += to_string(pop.GetBestSteps());
+            surfaceMessage = TTF_RenderText_Solid(pFont, text.c_str(), White);
+            Message = SDL_CreateTextureFromSurface(r, surfaceMessage);
+            SDL_RenderCopy(r, Message, NULL, &rectMessageSteps);
+            SDL_FreeSurface(surfaceMessage);
+            SDL_DestroyTexture(Message);
+
 
             state = STATE_UPDATED;
         }

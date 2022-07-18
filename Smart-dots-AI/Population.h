@@ -11,6 +11,7 @@ public:
 	~Population();
 	void Update(SDL_Renderer* renderer);
 	int GetGeneration();
+	int GetBestSteps();
 
 private:
 	Field* pField;
@@ -18,6 +19,7 @@ private:
 	Dot **ppDots;
 	float fFitnessSum = 0;
 	int iGen = 0;
+	int iBestSteps = 0;
 
 	bool AllDotsDead();
 	void CalculateFitnessSum();

@@ -57,6 +57,8 @@ void Population::NaturalSelection()
 
 	Dot* pBestDot = GetBestDot();
 
+	iBestSteps = pBestDot->GetSteps();
+
 	ppNewDots[0] = pBestDot->CloneDot();
 	ppNewDots[0]->SetBest();
 
@@ -120,6 +122,11 @@ Dot* Population::GetBestDot()
 int Population::GetGeneration()
 {
 	return iGen;
+}
+
+int Population::GetBestSteps()
+{
+	return iBestSteps;
 }
 
 

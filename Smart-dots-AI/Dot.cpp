@@ -146,6 +146,11 @@ void Dot::SetBest()
     bIsBest = true;
 }
 
+int Dot::GetSteps()
+{
+    return iStep;
+}
+
 
 
 

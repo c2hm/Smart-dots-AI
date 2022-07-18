@@ -17,6 +17,7 @@ public:
     bool IsDead();
     void Mutate();
     void SetBest();
+    int GetSteps();
     
 
 private:
