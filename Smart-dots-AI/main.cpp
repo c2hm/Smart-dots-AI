@@ -11,13 +11,13 @@ using namespace std;
 const int STATE_UPDATE = 0;
 const int STATE_UPDATED = 1;
 const int STATE_PRESENT = 3;
-const int FRAME_RATE = 50;
+const int FRAME_RATE = 30;
 
 SDL_Event event;
 SDL_Renderer* r = NULL;
 SDL_Window* window = NULL; 
 Field field(400, 100);
-Population pop(&field, 2000, 375, 700);
+Population pop(&field, 1000, 375, 700);
 uint32_t frameTimer;
 int state = STATE_UPDATE;
 
@@ -50,6 +50,8 @@ int main(int argc, char* argv[]) {
     field.AddObstacle(500, 100, 200, 50);
     field.AddObstacle(400, 450, 200, 50);
     field.AddObstacle(300, 550, 50, 300);
+    field.AddObstacle(375, 50, 50, 150);
+    field.AddObstacle(375, 300, 50, 75);
 
     frameTimer = SDL_GetTicks();
 

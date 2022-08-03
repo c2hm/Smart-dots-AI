@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const int MUTATION_PERCENTAGE_LIMIT = 1;
+const int MUTATION_PERCENTAGE_LIMIT = 10;
 
 Brain::Brain(int s) : iSize(s)
 {
